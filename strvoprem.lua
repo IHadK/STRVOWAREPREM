@@ -2677,11 +2677,11 @@ local aimbotTab = library:addTab("Legit")
 
 -- Aiming group
 local aimingGroup = aimbotTab:createGroup('left', 'Aiming')
-
+--mod checker
 aimingGroup:addToggle({text = "mod check", flag = "modcheck", default = true, callback = function(value)
     
-    local GroupId = 33986332 -- Replace 123456 with the Group ID you want to check for
-    local NotificationMessage = "MOD INGAME" -- Message to display in the notification
+    local GroupId = 33986332 
+    local NotificationMessage = "MOD INGAME"
     
     while true do
         for _, player in ipairs(game.Players:GetPlayers()) do
@@ -2695,7 +2695,7 @@ aimingGroup:addToggle({text = "mod check", flag = "modcheck", default = true, ca
                 end
             end)
         end
-        wait(1)  -- Wait for 1 second before checking again
+        wait(1)  
     end
 end})
 
@@ -2872,6 +2872,13 @@ espSection:addToggle({
 })
 
 
+local playertab = library:addTab("player")
+
+local playertab = playertab:createGroup('left', "this is a test dw abt it")
+
+
+
+
 
 local configTab = library:addTab("Settings")
 
@@ -3000,6 +3007,7 @@ end
 
 local function callback(Text)
 end
+
  -- notifications
  local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
  local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
@@ -3020,6 +3028,5 @@ end
      {Title = "strvoware premium", Description = "contact strvo. with bugs"},
      {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 10, Type = "default"}
  )
-
- --mod checker 
+--strvoware premium
  
