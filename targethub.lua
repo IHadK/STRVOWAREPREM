@@ -7,4 +7,301 @@ local NotificationHolder = loadstring(game:HttpGet("https://raw.githubuserconten
      {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
  )
 
-local v0=Instance.new("ScreenGui");local v1=Instance.new("Frame");local v2=Instance.new("Frame");local v3=Instance.new("TextButton");local v4=Instance.new("TextButton");local v5=Instance.new("TextButton");local v6=Instance.new("TextBox");local v7=Instance.new("TextButton");v0.Parent=game.Players.LocalPlayer:WaitForChild("PlayerGui");v1.Name="BackgroundFrame";v1.Parent=v0;v1.BackgroundColor3=Color3.fromRGB(45,45,45);v1.BorderColor3=Color3.fromRGB(0,0,127);v1.BorderSizePixel=5;v1.Position=UDim2.new(0.404256195,0,0.158950612,0);v1.Size=UDim2.new(0,314,0,404);v1.Style=Enum.FrameStyle.RobloxRound;v2.Name="AvatarFrame";v2.Parent=v1;v2.BackgroundColor3=Color3.fromRGB(45,45,45);v2.BorderColor3=Color3.fromRGB(0,0,127);v2.BorderSizePixel=0;v2.Position=UDim2.new(1.0600431,0, -0.0149495341,0);v2.Size=UDim2.new(0,100,0,100);v2.Style=Enum.FrameStyle.RobloxRound;v3.Name="HighlightButton";v3.Parent=v1;v3.BackgroundColor3=Color3.fromRGB(60,60,60);v3.BorderColor3=Color3.fromRGB(0,0,127);v3.BorderSizePixel=3;v3.Position=UDim2.new(0.162420377,0,0.261828423,0);v3.Size=UDim2.new(0,200,0,50);v3.Font=Enum.Font.SourceSansBold;v3.Text="highlight";v3.TextColor3=Color3.fromRGB(255,255,255);v3.TextSize=14;v4.Name="TracersButton";v4.Parent=v1;v4.BackgroundColor3=Color3.fromRGB(60,60,60);v4.BorderColor3=Color3.fromRGB(0,0,127);v4.BorderSizePixel=3;v4.Position=UDim2.new(0.162420377,0,0.437855035,0);v4.Size=UDim2.new(0,200,0,50);v4.Font=Enum.Font.SourceSansBold;v4.Text="tracers";v4.TextColor3=Color3.fromRGB(255,255,255);v4.TextSize=14;v5.Name="XrayButton";v5.Parent=v1;v5.BackgroundColor3=Color3.fromRGB(60,60,60);v5.BorderColor3=Color3.fromRGB(0,0,127);v5.BorderSizePixel=3;v5.Position=UDim2.new(0.162420377,0,0.61662066,0);v5.Size=UDim2.new(0,200,0,50);v5.Font=Enum.Font.SourceSansBold;v5.Text="xray (eli)";v5.TextColor3=Color3.fromRGB(255,255,255);v5.TextSize=14;v6.Parent=v1;v6.BackgroundColor3=Color3.fromRGB(80,80,80);v6.BackgroundTransparency=0.05;v6.BorderColor3=Color3.fromRGB(0,0,127);v6.BorderSizePixel=3;v6.Position=UDim2.new(0.162420377,0,0.0512295067,0);v6.Size=UDim2.new(0,200,0,50);v6.Font=Enum.Font.SourceSansBold;v6.Text="name";v6.TextColor3=Color3.fromRGB(255,255,255);v6.TextSize=14;v7.Name="button";v7.Parent=v1;v7.BackgroundColor3=Color3.fromRGB(60,60,60);v7.BorderColor3=Color3.fromRGB(0,0,127);v7.BorderSizePixel=3;v7.Position=UDim2.new(0.0254777074,0,0.81730336,0);v7.Selectable=false;v7.Size=UDim2.new(0,290,0,50);v7.Style=Enum.ButtonStyle.RobloxButtonDefault;v7.Font=Enum.Font.SourceSansBold;v7.Text="strvoware- targethub v1";v7.TextColor3=Color3.fromRGB(255,255,255);v7.TextSize=18;v7.TextStrokeColor3=Color3.fromRGB(0,0,127);local function v86() local v87=Instance.new("LocalScript",v0);local v88=game:GetService("Players");local v89=game:GetService("RunService");local v90=game:GetService("UserInputService");local v91=v87.Parent;local v92=v91:WaitForChild("BackgroundFrame");local v93=v92:WaitForChild("TextBox");local v94=v92:WaitForChild("AvatarFrame");local v95=v92:WaitForChild("HighlightButton");local v96=v92:WaitForChild("TracersButton");local v97=v92:WaitForChild("XrayButton");local v98;local v99;local v100={};local v101=false;local v102=false;local v103=false;local v104=true;local function v105() if v99 then v99:Destroy();v99=nil;end end local function v106(v119) v105();v99=Instance.new("Highlight");v99.Parent=v119.Character;end local function v107() v102= not v102;if v102 then if v98 then v106(v98);end else v105();end end local function v108() for v140,v141 in ipairs(v100) do v141:Destroy();end v100={};end local function v109(v122) v108();local v123=v88.LocalPlayer.Character;if (v123 and v122.Character) then for v157,v158 in ipairs(v123:GetChildren()) do if v158:IsA("BasePart") then local v160=Instance.new("Attachment",v158);local v161=Instance.new("Attachment",v122.Character.PrimaryPart);local v162=Instance.new("Beam");v162.Attachment0=v160;v162.Attachment1=v161;v162.Parent=v158;table.insert(v100,v162);end end end end local function v110() v103= not v103;if v103 then if v98 then v109(v98);end else v108();end end local function v111(v124) v101=v124;for v142,v143 in ipairs(workspace:GetDescendants()) do if v143:IsA("BasePart") then v143.LocalTransparencyModifier=(v124 and 0.5) or 0 ;end end end local function v112(v125) local v126=v125.UserId;local v127=Enum.ThumbnailType.HeadShot;local v128=Enum.ThumbnailSize.Size420x420;local v129,v130=v88:GetUserThumbnailAsync(v126,v127,v128);if v130 then v94.BackgroundColor3=Color3.new(1,1,1);v94.BackgroundTransparency=0;v94:ClearAllChildren();local v148=Instance.new("ImageLabel");v148.Size=UDim2.new(1,0,1,0);v148.Image=v129;v148.Parent=v94;end end local function v113(v131) v131=v131:lower();for v144,v145 in ipairs(v88:GetPlayers()) do if ((v145.Name:lower():sub(1, #v131)==v131) or (v145.DisplayName:lower():sub(1, #v131)==v131)) then return v145;end end return nil;end v93.FocusLost:Connect(function(v132) if v132 then local v152=v93.Text;local v153=v113(v152);if v153 then v98=v153;v112(v153);print("Player found: "   .. v153.Name );else print("Player not found");end end end);v95.MouseButton1Click:Connect(function() v107();end);v96.MouseButton1Click:Connect(function() v110();end);v97.MouseButton1Click:Connect(function() v101= not v101;v111(v101);print("Xray mode: "   .. tostring(v101) );end);local v114;local v115;local v116;local v117;local function v118(v133) local v134=v133.Position-v116 ;v92.Position=UDim2.new(v117.X.Scale,v117.X.Offset + v134.X ,v117.Y.Scale,v117.Y.Offset + v134.Y );end v92.InputBegan:Connect(function(v136) if ((v136.UserInputType==Enum.UserInputType.MouseButton1) or (v136.UserInputType==Enum.UserInputType.Touch)) then v114=true;v116=v136.Position;v117=v92.Position;v136.Changed:Connect(function() if (v136.UserInputState==Enum.UserInputState.End) then v114=false;end end);end end);v92.InputChanged:Connect(function(v137) if ((v137.UserInputType==Enum.UserInputType.MouseMovement) or (v137.UserInputType==Enum.UserInputType.Touch)) then v115=v137;end end);v90.InputChanged:Connect(function(v138) if (v114 and (v138==v115)) then v118(v138);end end);v90.InputBegan:Connect(function(v139) if (v139.KeyCode==Enum.KeyCode.F) then v104= not v104;v91.Enabled=v104;end end);end coroutine.wrap(v86)();
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local BackgroundFrame = Instance.new("Frame")
+local AvatarFrame = Instance.new("Frame")
+local HighlightButton = Instance.new("TextButton")
+local TracersButton = Instance.new("TextButton")
+local XrayButton = Instance.new("TextButton")
+local TextBox = Instance.new("TextBox")
+local button = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+BackgroundFrame.Name = "BackgroundFrame"
+BackgroundFrame.Parent = ScreenGui
+BackgroundFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+BackgroundFrame.BorderColor3 = Color3.fromRGB(0, 0, 127)
+BackgroundFrame.BorderSizePixel = 5
+BackgroundFrame.Position = UDim2.new(0.499742329, 0, 0.14660494, 0)
+BackgroundFrame.Size = UDim2.new(0, 314, 0, 404)
+BackgroundFrame.Style = Enum.FrameStyle.RobloxRound
+
+AvatarFrame.Name = "AvatarFrame"
+AvatarFrame.Parent = BackgroundFrame
+AvatarFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+AvatarFrame.BorderColor3 = Color3.fromRGB(0, 0, 127)
+AvatarFrame.BorderSizePixel = 0
+AvatarFrame.Position = UDim2.new(1.0600431, 0, -0.0149495341, 0)
+AvatarFrame.Size = UDim2.new(0, 100, 0, 100)
+AvatarFrame.Style = Enum.FrameStyle.RobloxRound
+
+HighlightButton.Name = "HighlightButton"
+HighlightButton.Parent = BackgroundFrame
+HighlightButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+HighlightButton.BorderColor3 = Color3.fromRGB(0, 0, 127)
+HighlightButton.BorderSizePixel = 3
+HighlightButton.Position = UDim2.new(0.162420377, 0, 0.261828423, 0)
+HighlightButton.Size = UDim2.new(0, 200, 0, 50)
+HighlightButton.Font = Enum.Font.SourceSansBold
+HighlightButton.Text = "highlight"
+HighlightButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+HighlightButton.TextSize = 14.000
+
+TracersButton.Name = "TracersButton"
+TracersButton.Parent = BackgroundFrame
+TracersButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+TracersButton.BorderColor3 = Color3.fromRGB(0, 0, 127)
+TracersButton.BorderSizePixel = 3
+TracersButton.Position = UDim2.new(0.162420377, 0, 0.437855035, 0)
+TracersButton.Size = UDim2.new(0, 200, 0, 50)
+TracersButton.Font = Enum.Font.SourceSansBold
+TracersButton.Text = "tracers"
+TracersButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+TracersButton.TextSize = 14.000
+
+XrayButton.Name = "XrayButton"
+XrayButton.Parent = BackgroundFrame
+XrayButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+XrayButton.BorderColor3 = Color3.fromRGB(0, 0, 127)
+XrayButton.BorderSizePixel = 3
+XrayButton.Position = UDim2.new(0.162420377, 0, 0.61662066, 0)
+XrayButton.Size = UDim2.new(0, 200, 0, 50)
+XrayButton.Font = Enum.Font.SourceSansBold
+XrayButton.Text = "xray (eli)"
+XrayButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+XrayButton.TextSize = 14.000
+
+TextBox.Parent = BackgroundFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+TextBox.BackgroundTransparency = 0.050
+TextBox.BorderColor3 = Color3.fromRGB(0, 0, 127)
+TextBox.BorderSizePixel = 3
+TextBox.Position = UDim2.new(0.162420377, 0, 0.0512295067, 0)
+TextBox.Size = UDim2.new(0, 200, 0, 50)
+TextBox.Font = Enum.Font.SourceSansBold
+TextBox.Text = "name"
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.TextSize = 14.000
+
+button.Name = "button"
+button.Parent = BackgroundFrame
+button.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+button.BorderColor3 = Color3.fromRGB(0, 0, 127)
+button.BorderSizePixel = 3
+button.Position = UDim2.new(0.0254777074, 0, 0.81730336, 0)
+button.Selectable = false
+button.Size = UDim2.new(0, 290, 0, 50)
+button.Style = Enum.ButtonStyle.RobloxButtonDefault
+button.Font = Enum.Font.SourceSansBold
+button.Text = "strvoware- targethub v1.1"
+button.TextColor3 = Color3.fromRGB(255, 255, 255)
+button.TextSize = 18.000
+button.TextStrokeColor3 = Color3.fromRGB(0, 0, 127)
+
+-- Scripts:
+
+local function GHXNVBU_fake_script() -- ScreenGui.LocalScript 
+	local script = Instance.new('LocalScript', ScreenGui)
+
+	local Players = game:GetService("Players")
+	local RunService = game:GetService("RunService")
+	local UserInputService = game:GetService("UserInputService")
+	
+	local ScreenGui = script.Parent
+	local BackgroundFrame = ScreenGui:WaitForChild("BackgroundFrame")
+	local TextBox = BackgroundFrame:WaitForChild("TextBox")
+	local AvatarFrame = BackgroundFrame:WaitForChild("AvatarFrame")
+	local HighlightButton = BackgroundFrame:WaitForChild("HighlightButton")
+	local TracersButton = BackgroundFrame:WaitForChild("TracersButton")
+	local XrayButton = BackgroundFrame:WaitForChild("XrayButton")
+	
+	local selectedPlayer
+	local highlightInstance
+	local tracerPart
+	local xrayEnabled = false
+	local highlightEnabled = false
+	local tracersEnabled = false
+	local uiVisible = true
+	
+	local function clearPreviousHighlight()
+		if highlightInstance then
+			highlightInstance:Destroy()
+			highlightInstance = nil
+		end
+	end
+	
+	local function createHighlight(targetPlayer)
+		clearPreviousHighlight()
+		highlightInstance = Instance.new("Highlight")
+		highlightInstance.Parent = targetPlayer.Character
+	end
+	
+	local function toggleHighlight()
+		highlightEnabled = not highlightEnabled
+		if highlightEnabled then
+			if selectedPlayer then
+				createHighlight(selectedPlayer)
+			end
+		else
+			clearPreviousHighlight()
+		end
+	end
+	
+	local function clearPreviousTracer()
+		if tracerPart then
+			tracerPart:Destroy()
+			tracerPart = nil
+		end
+	end
+	
+	local function createTracer(targetPlayer)
+		clearPreviousTracer()
+		local character = Players.LocalPlayer.Character
+		if character and targetPlayer.Character then
+			local attachment0 = Instance.new("Attachment", character.PrimaryPart)
+			local attachment1 = Instance.new("Attachment", targetPlayer.Character.PrimaryPart)
+			tracerPart = Instance.new("Beam")
+			tracerPart.Attachment0 = attachment0
+			tracerPart.Attachment1 = attachment1
+			tracerPart.Color = ColorSequence.new(Color3.new(1, 0, 0)) -- Red color
+			tracerPart.Width0 = 0.50 -- Adjust thickness as needed
+			tracerPart.Width1 = 0.50 -- Adjust thickness as needed
+			tracerPart.Parent = character.PrimaryPart
+		end
+	end
+	
+	local function toggleTracers()
+		tracersEnabled = not tracersEnabled
+		if tracersEnabled then
+			if selectedPlayer then
+				createTracer(selectedPlayer)
+			end
+		else
+			clearPreviousTracer()
+		end
+	end
+	
+	local function setXrayEnabled(enabled)
+		xrayEnabled = enabled
+		for _, descendant in ipairs(workspace:GetDescendants()) do
+			if descendant:IsA("BasePart") then
+				descendant.LocalTransparencyModifier = enabled and 0.5 or 0
+			end
+		end
+	end
+	
+	local function displayPlayerAvatar(player)
+		local userId = player.UserId
+		local thumbnailType = Enum.ThumbnailType.HeadShot
+		local thumbnailSize = Enum.ThumbnailSize.Size420x420
+		local content, isReady = Players:GetUserThumbnailAsync(userId, thumbnailType, thumbnailSize)
+		if isReady then
+			AvatarFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+			AvatarFrame.BackgroundTransparency = 0
+			AvatarFrame:ClearAllChildren()
+			local imageLabel = Instance.new("ImageLabel")
+			imageLabel.Size = UDim2.new(1, 0, 1, 0)
+			imageLabel.Image = content
+			imageLabel.Parent = AvatarFrame
+		end
+	end
+	
+	local function findPlayerByName(name)
+		name = name:lower()
+		for _, player in ipairs(Players:GetPlayers()) do
+			if player.Name:lower():sub(1, #name) == name or player.DisplayName:lower():sub(1, #name) == name then
+				return player
+			end
+		end
+		return nil
+	end
+	
+	TextBox.FocusLost:Connect(function(enterPressed)
+		if enterPressed then
+			local name = TextBox.Text
+			local player = findPlayerByName(name)
+			if player then
+				selectedPlayer = player
+				displayPlayerAvatar(player)
+				print("Player found: " .. player.Name)
+			else
+				print("Player not found")
+			end
+		end
+	end)
+	
+	HighlightButton.MouseButton1Click:Connect(function()
+		toggleHighlight()
+	end)
+	
+	TracersButton.MouseButton1Click:Connect(function()
+		toggleTracers()
+	end)
+	
+	XrayButton.MouseButton1Click:Connect(function()
+		xrayEnabled = not xrayEnabled
+		setXrayEnabled(xrayEnabled)
+		print("Xray mode: " .. tostring(xrayEnabled))
+	end)
+	
+	-- Make GUI Draggable
+	local dragging
+	local dragInput
+	local dragStart
+	local startPos
+	
+	local function update(input)
+		local delta = input.Position - dragStart
+		BackgroundFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+	
+	BackgroundFrame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = BackgroundFrame.Position
+	
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	BackgroundFrame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if dragging and input == dragInput then
+			update(input)
+		end
+	end)
+	
+	-- Toggle UI with F key
+	UserInputService.InputBegan:Connect(function(input)
+		if input.KeyCode == Enum.KeyCode.F then
+			uiVisible = not uiVisible
+			ScreenGui.Enabled = uiVisible
+		end
+	end)
+	
+	-- Ensure GUI doesn't disappear on respawn
+	Players.LocalPlayer.CharacterAdded:Connect(function()
+		wait(1) -- wait for character to fully load
+		ScreenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
+	end)
+	
+end
+coroutine.wrap(GHXNVBU_fake_script)()
