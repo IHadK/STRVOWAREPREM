@@ -2678,26 +2678,70 @@ local aimbotTab = library:addTab("Legit")
 -- Aiming group
 local aimingGroup = aimbotTab:createGroup('left', 'Aiming')
 --mod checker
-aimingGroup:addToggle({text = "mod check", flag = "modcheck", default = true, callback = function(value)
+local GroupId = 33986332
+local NotificationMessagePrefix = "MOD INGAME: "
+local notificationEnabled = false
+local notificationConnection
+local playersInGroup = {} -- Table to track players in the group and their join times
+
+local function sendNotification()
+    local playersList = {}
     
-    local GroupId = 33986332 
-    local NotificationMessage = "MOD INGAME"
-    
-    while true do
-        for _, player in ipairs(game.Players:GetPlayers()) do
-            local success, _ = pcall(function()
-                if player:IsInGroup(GroupId) then
-                    game.StarterGui:SetCore("SendNotification", {
-                        Title = "warning lil bro",
-                        Text = NotificationMessage,
-                        Duration = 5
-                    })
-                end
-            end)
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player:IsInGroup(GroupId) then
+            table.insert(playersList, player.DisplayName) -- Store display names
         end
-        wait(1)  
     end
-end})
+
+    -- Sort players by their join order (assuming they joined when the game started)
+    table.sort(playersList)
+
+    if #playersList > 0 then
+        local combinedMessage = NotificationMessagePrefix .. table.concat(playersList, ", ")
+        
+        -- Send the notification with combined message
+        local success, _ = pcall(function()
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Watch Out!!",
+                Text = combinedMessage,
+                Duration = 5 -- Notification visible for 5 seconds
+            })
+        end)
+
+        if not success then
+            warn("Failed to send notification")
+        end
+    end
+end
+
+local function startNotificationLoop()
+    while notificationEnabled do
+        sendNotification() -- Call the notification function
+        
+        wait(2) -- Wait for 5 seconds before checking again
+    end
+end
+
+local function toggleNotification(value)
+    notificationEnabled = value
+    if notificationEnabled then
+        startNotificationLoop()
+    else
+        -- If toggled off, clear the player list or handle accordingly.
+        playersInGroup = {}
+    end
+end
+
+-- Assuming aimingGroup is already defined in your GUI library/code.
+aimingGroup:addToggle({
+    text = "Mod Check",
+    flag = "modcheck",
+    default = true,
+    callback = function(value)
+        toggleNotification(value)
+    end
+})
+
 
 aimingGroup:addList({text = "Mode", flag = "SilentMode", values = {"FOV", "Target"}, callback = function(value)
     silent.mode = value
