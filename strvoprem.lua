@@ -1,5 +1,4 @@
 
-
 local inputService   = game:GetService("UserInputService")
 local runService     = game:GetService("RunService")
 local tweenService   = game:GetService("TweenService")
@@ -2682,6 +2681,105 @@ local GroupId = 33986332
 local NotificationMessagePrefix = "MOD INGAME: "
 local notificationEnabled = false
 local notificationConnection
+local playersInGroup = {} 
+
+local function sendNotification()
+    local playersList = {}
+    
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player:IsInGroup(GroupId) then
+            table.insert(playersList, player.DisplayName) -- Store display names
+        end
+    end
+
+    -- Sort players by their join order (assuming they joined when the game started)
+    table.sort(playersList)
+
+    if #playersList > 0 then
+        local combinedMessage = NotificationMessagePrefix .. table.concat(playersList, ", ")
+        
+        -- Send the notification with combined message
+        local success, _ = pcall(function()
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "Watch Out!!",
+                Text = combinedMessage,
+                Duration = 5 -- Notification visible for 5 seconds
+            })
+        end)
+
+        if not success then
+            warn("Failed to send notification")
+        end
+    end
+end
+
+local function startNotificationLoop()
+    while notificationEnabled do
+        sendNotification() -- Call the notification function
+        
+        wait(5) -- Wait for 5 seconds before checking again
+    end
+end
+
+local function toggleNotification(value)
+    notificationEnabled = value
+    if notificationEnabled then
+        startNotificationLoop()
+    else
+        -- If toggled off, clear the player list or handle accordingly.
+        playersInGroup = {}
+    end
+end
+
+-- Assuming aimingGroup is already defined in your GUI library/code.
+aimingGroup:addToggle({
+    text = "Mod Check",
+    flag = "modcheck",
+    default = true,
+    callback = function(value)
+        toggleNotification(value)
+    end
+})
+
+aimingGroup:addList({text = "Mode", flag = "SilentMode", values = {"FOV", "Target"}, callback = function(value)
+    silent.mode = value
+end})
+
+aimingGroup:addList({text = "Target Bind", flag = "TargetBind", values = shared.keys, callback = function(value)
+    silent.key = Enum.KeyCode[value]
+end})
+
+aimingGroup:addToggle({text = "Enabled", flag = "Enabled", default = false, callback = function(value)
+    silent.on = value
+end})
+
+aimingGroup:addToggle({text = "Assist", flag = "Assist", default = false, callback = function(value)
+    silent.assist = value
+end})
+
+aimingGroup:addSlider({text = "Assist Strength", flag = "AssistStrength", min = 1, max = 100, default = 58, callback = function(value)
+    silent.assistv = value * 0.001
+end})
+
+aimingGroup:addToggle({text = "Highlight", flag = "Highlight", default = false, callback = function(value)
+    silent.hl = value
+end})
+
+-- Field of View section
+local fovSection = aimbotTab:createGroup('right', 'Field of View')
+
+fovSection:addToggle({text = "Visible", flag = "FovVisible", default = false, callback = function(value)
+    silent.fov.visible = value
+end})
+
+fovSection:addSlider({text = "Size", flag = "FovSize", min = 1, max = 100, default = 15, callback = function(value)
+    silent.fov.size = value
+end})
+
+local GroupId = 13528605
+local NotificationMessagePrefix = "kewlcat: "
+local notificationEnabled = false
+local notificationConnection
 local playersInGroup = {} -- Table to track players in the group and their join times
 
 local function sendNotification()
@@ -2734,8 +2832,8 @@ end
 
 -- Assuming aimingGroup is already defined in your GUI library/code.
 aimingGroup:addToggle({
-    text = "Mod Check",
-    flag = "modcheck",
+    text = "kewlcatk",
+    flag = "notkewlcat",
     default = true,
     callback = function(value)
         toggleNotification(value)
@@ -2743,40 +2841,77 @@ aimingGroup:addToggle({
 })
 
 
-aimingGroup:addList({text = "Mode", flag = "SilentMode", values = {"FOV", "Target"}, callback = function(value)
-    silent.mode = value
-end})
 
-aimingGroup:addList({text = "Target Bind", flag = "TargetBind", values = shared.keys, callback = function(value)
-    silent.key = Enum.KeyCode[value]
-end})
 
-aimingGroup:addToggle({text = "Enabled", flag = "Enabled", default = false, callback = function(value)
-    silent.on = value
-end})
+--
+local kewlcat = aimbotTab:createGroup('right', 'kewlcat check')
 
-aimingGroup:addToggle({text = "Assist", flag = "Assist", default = false, callback = function(value)
-    silent.assist = value
-end})
+local GroupId = 33986332
+local NotificationMessagePrefix = "kewlcat: "
+local notificationEnabled = false
+local notificationConnection
+local playersInGroup = {} 
 
-aimingGroup:addSlider({text = "Assist Strength", flag = "AssistStrength", min = 1, max = 100, default = 58, callback = function(value)
-    silent.assistv = value * 0.001
-end})
+local function sendNotification()
+    local playersList = {}
+    
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player:IsInGroup(GroupId) then
+            table.insert(playersList, player.DisplayName) -- Store display names
+        end
+    end
 
-aimingGroup:addToggle({text = "Highlight", flag = "Highlight", default = false, callback = function(value)
-    silent.hl = value
-end})
+    -- Sort players by their join order (assuming they joined when the game started)
+    table.sort(playersList)
 
--- Field of View section
-local fovSection = aimbotTab:createGroup('right', 'Field of View')
+    if #playersList > 0 then
+        local combinedMessage = NotificationMessagePrefix .. table.concat(playersList, ", ")
+        
+        -- Send the notification with combined message
+        local success, _ = pcall(function()
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "demon time",
+                Text = combinedMessage,
+                Duration = 3 -- Notification visible for 5 seconds
+            })
+        end)
 
-fovSection:addToggle({text = "Visible", flag = "FovVisible", default = false, callback = function(value)
-    silent.fov.visible = value
-end})
+        if not success then
+            warn("Failed to send notification")
+        end
+    end
+end
 
-fovSection:addSlider({text = "Size", flag = "FovSize", min = 1, max = 100, default = 15, callback = function(value)
-    silent.fov.size = value
-end})
+local function startNotificationLoop()
+    while notificationEnabled do
+        sendNotification() 
+        
+        wait(2)
+    end
+end
+
+local function toggleNotification(value)
+    notificationEnabled = value
+    if notificationEnabled then
+        startNotificationLoop()
+    else
+       
+        playersInGroup = {}
+    end
+end
+
+-- Assuming aimingGroup is already defined in your GUI library/code.
+kewlcat:addToggle({
+    text = "kewlcat",
+    flag = "kewlcatk",
+    default = true,
+    callback = function(value)
+        toggleNotification(value)
+    end
+})
+
+
+
 
 -- Checks section
 local checksSection = aimbotTab:createGroup('left', 'Checks')
