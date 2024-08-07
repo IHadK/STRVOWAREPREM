@@ -2662,7 +2662,7 @@ do --// Visuals functions
     end;
     
     VisualsModule.WeaponInfo = VisualsModule:NewLabel();
-    VisualsModule.PredCircle = VisualsModule:Draw("Circle", {
+    VisualsModule.PredCircle = VisualsModule:Draw("Square", {
         Thickness = 0,
         Size = Vector2.new(100, 0),
         Filled = false;
