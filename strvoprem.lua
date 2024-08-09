@@ -9,7 +9,7 @@ local mouse          = localPlayer:GetMouse()
 local strvo           = game:GetObjects("rbxassetid://12705540680")[1]
 strvo.bg.Position     = UDim2.new(0.5,-strvo.bg.Size.X.Offset/2,0.5,-strvo.bg.Size.Y.Offset/2)
 strvo.Parent          = game:GetService("CoreGui")
-strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">Version 2.5</font>'
+strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0001">Version 2.6.7</font>'
 
 local library = {cheatname = "strvoware";ext = "";gamename = "";colorpicking = false;tabbuttons = {};tabs = {};options = {};flags = {};scrolling = false;notifyText = Drawing.new("Text");playing = false;multiZindex = 200;toInvis = {};libColor = Color3.fromRGB(69, 23, 255);disabledcolor = Color3.fromRGB(233, 0, 0);blacklisted = {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.UserInputType.MouseMovement}}
 
@@ -2749,6 +2749,44 @@ aimingGroup:addList({text = "Target Bind", flag = "TargetBind", values = shared.
     silent.key = Enum.KeyCode[value]
 end})
 
+aimingGroup:addButton({
+    text = "Resovler", 
+    callback = function()
+        
+        local RunService = game:GetService("RunService")
+
+local function zeroOutYVelocity(hrp)
+    hrp.Velocity = Vector3.new(hrp.Velocity.X, 0, hrp.Velocity.Z)
+    hrp.AssemblyLinearVelocity = Vector3.new(hrp.Velocity.X, 0, hrp.Velocity.Z)
+end
+
+local function onPlayerAdded(player)
+    player.CharacterAdded:Connect(function(character)
+        local hrp = character:WaitForChild("HumanoidRootPart")
+        zeroOutYVelocity(hrp)
+    end)
+end
+
+local function onPlayerRemoving(player)
+    player.CharacterAdded:Disconnect()
+end
+
+game.Players.PlayerAdded:Connect(onPlayerAdded)
+game.Players.PlayerRemoving:Connect(onPlayerRemoving)
+
+RunService.Heartbeat:Connect(function()
+    pcall(function()
+        for i, player in pairs(game.Players:GetChildren()) do
+            if player.Name ~= game.Players.LocalPlayer.Name then
+                local hrp = player.Character.HumanoidRootPart
+                zeroOutYVelocity(hrp)
+            end
+        end
+    end)
+end)
+end})
+
+
 aimingGroup:addToggle({text = "Enabled", flag = "Enabled", default = false, callback = function(value)
     silent.on = value
 end})
@@ -2850,7 +2888,7 @@ local function toggleNotification(value)
     end
 end
 
--- Assuming aimingGroup is already defined in your GUI library/code.
+
 kewlcat:addToggle({
     text = "kewlcat",
     flag = "kewlcatk",
