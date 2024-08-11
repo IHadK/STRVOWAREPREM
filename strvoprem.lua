@@ -9,7 +9,7 @@ local mouse          = localPlayer:GetMouse()
 local strvo           = game:GetObjects("rbxassetid://12705540680")[1]
 strvo.bg.Position     = UDim2.new(0.5,-strvo.bg.Size.X.Offset/2,0.5,-strvo.bg.Size.Y.Offset/2)
 strvo.Parent          = game:GetService("CoreGui")
-strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0001">Version 2.6.7</font>'
+strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">Version 2.5</font>'
 
 local library = {cheatname = "strvoware";ext = "";gamename = "";colorpicking = false;tabbuttons = {};tabs = {};options = {};flags = {};scrolling = false;notifyText = Drawing.new("Text");playing = false;multiZindex = 200;toInvis = {};libColor = Color3.fromRGB(69, 23, 255);disabledcolor = Color3.fromRGB(233, 0, 0);blacklisted = {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.UserInputType.MouseMovement}}
 
@@ -196,10 +196,10 @@ function library:addTab(name)
         local backframe = Instance.new("Frame")
 
         groupCount -= 1
-
+--rgb strvo
         groupbox.Parent = newTab[pos]
-        groupbox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-        groupbox.BorderColor3 = Color3.fromRGB(7, 234, 242)
+        groupbox.BackgroundColor3 = Color3.fromRGB(119, 15, 255)
+        groupbox.BorderColor3 = Color3.fromRGB(119, 15, 133)
         groupbox.BorderSizePixel = 2
         groupbox.Size = UDim2.new(0, 215, 0, 8)
         groupbox.ZIndex = groupCount
@@ -728,8 +728,8 @@ function library:addTab(name)
             
             main.Name = "main"
             main.Parent = bg
-            main.BackgroundColor3 = Color3.fromRGB(7, 234, 242)
-            main.BorderColor3 = Color3.fromRGB(7, 234, 242)
+            main.BackgroundColor3 = Color3.fromRGB(119, 15, 255)
+            main.BorderColor3 = Color3.fromRGB(119, 15, 255)
             main.Size = UDim2.new(1, 0, 1, 0)
             
             fill.Name = "fill"
@@ -1465,7 +1465,7 @@ function library:addTab(name)
 
             picker.Name = "picker"
             picker.Parent = main
-            picker.BackgroundColor3 = Color3.fromRGB(232, 0, 255)
+            picker.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
             picker.BorderColor3 = Color3.fromRGB(0, 0, 0)
             picker.BorderSizePixel = 0
             picker.Size = UDim2.new(0, 100, 0, 100)
