@@ -9,7 +9,7 @@ local mouse          = localPlayer:GetMouse()
 local strvo           = game:GetObjects("rbxassetid://12705540680")[1]
 strvo.bg.Position     = UDim2.new(0.5,-strvo.bg.Size.X.Offset/2,0.5,-strvo.bg.Size.Y.Offset/2)
 strvo.Parent          = game:GetService("CoreGui")
-strvo.bg.pre.Text = '<font color="#FFFFF2">forskis streamable</font> - <font color="#FF0000">Version 2.6</font>'
+strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">hotfix for xeno</font>'
 
 local library = {cheatname = "strvoware";ext = "";gamename = "";colorpicking = false;tabbuttons = {};tabs = {};options = {};flags = {};scrolling = false;notifyText = Drawing.new("Text");playing = false;multiZindex = 200;toInvis = {};libColor = Color3.fromRGB(69, 23, 255);disabledcolor = Color3.fromRGB(233, 0, 0);blacklisted = {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.UserInputType.MouseMovement}}
 
@@ -245,7 +245,7 @@ function library:addTab(name)
         local group = {}
         function group:addToggle(args)
             if not args.flag and args.text then args.flag = args.text end
-            if not args.flag then return warn("⚠️ incorrect arguments ⚠️ - missing args on recent toggle") end
+            if not args.flag then return warn("line 248") end
             groupbox.Size += UDim2.new(0, 0, 0, 20)
 
             local toggleframe = Instance.new("Frame")
@@ -349,7 +349,7 @@ function library:addTab(name)
             library.options[args.flag] = {type = "toggle",changeState = toggle,skipflag = args.skipflag,oldargs = args}
             local toggle = {}
             function toggle:addKeybind(args)
-                if not args.flag then return warn("⚠️ incorrect arguments ⚠️ - missing args on toggle:keybind") end
+                if not args.flag then return warn("line 352") end
                 local next = false
                 
                 local keybind = Instance.new("Frame")
@@ -498,7 +498,7 @@ function library:addTab(name)
                 picker.Size = UDim2.new(0, 100, 0, 100)
                 picker.ZIndex = 104
                 picker.Image = "rbxassetid://2615689005"
-    
+
                 pickerframe.Name = "pickerframe"
                 pickerframe.Parent = colorFrame
                 pickerframe.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
@@ -546,7 +546,7 @@ function library:addTab(name)
                 copy.TextSize = 14.000
                 copy.TextStrokeTransparency = 0.000
 
-                copy.MouseButton1Click:Connect(function() -- "  "..args.text or "  "..args.flag
+                copy.MouseButton1Click:Connect(function()
                     colorFrame.Visible = false
                 end)
 
@@ -639,7 +639,7 @@ function library:addTab(name)
             return toggle
         end
         function group:addButton(args)
-            if not args.callback or not args.text then return warn("⚠️ incorrect arguments ⚠️") end
+            if not args.callback or not args.text then return warn("line 642") end
             groupbox.Size += UDim2.new(0, 0, 0, 22)
 
             local buttonframe = Instance.new("Frame")
@@ -699,7 +699,6 @@ function library:addTab(name)
 			end)
         end
         function group:addSlider(args)
-            print(args, args.flag, args.max)
             groupbox.Size += UDim2.new(0, 0, 0, 30)
 
             local slider = Instance.new("Frame")
@@ -815,6 +814,7 @@ function library:addTab(name)
                 scrolling = false
                 library.scrolling = false
 			end
+
 			button.MouseEnter:connect(function()
                 if library.colorpicking then return end
 				if scrolling or entered then return end
@@ -943,10 +943,9 @@ function library:addTab(name)
             main.Size = UDim2.new(0, 191, 0, 1)
         end
         function group:addList(args)
-            if not args.flag or not args.values then return warn("⚠️ incorrect arguments ⚠️") end
+            if not args.flag or not args.values then return warn("line 946") end
             groupbox.Size += UDim2.new(0, 0, 0, 35)
             
---args.multiselect and "..." or ""
             library.multiZindex -= 1
 
             local list = Instance.new("Frame")
@@ -1345,7 +1344,7 @@ function library:addTab(name)
             updateValue(args.value or not args.multiselect and args.values[1] or "abcdefghijklmnopqrstuwvxyz")
         end
         function group:addColorpicker(args)
-            if not args.flag then return warn("⚠️ incorrect arguments ⚠️") end
+            if not args.flag then return warn("line 1348") end
             groupbox.Size += UDim2.new(0, 0, 0, 20)
         
             library.multiZindex -= 1
@@ -1610,7 +1609,7 @@ function library:addTab(name)
             updateValue(args.color or Color3.new(1,1,1))
         end
         function group:addKeybind(args)
-            if not args.flag then return warn("⚠️ incorrect arguments ⚠️ - missing args on toggle:keybind") end
+            if not args.flag then return warn("line 1613") end
             groupbox.Size += UDim2.new(0, 0, 0, 20)
             local next = false
             
@@ -1647,7 +1646,7 @@ function library:addTab(name)
             button.TextSize = 13.000
             button.TextStrokeTransparency = 0.000
             button.TextXAlignment = Enum.TextXAlignment.Right
-
+--ui ends
             function updateValue(val)
                 if library.colorpicking then return end
                 library.flags[args.flag] = val
@@ -1814,12 +1813,8 @@ local Flags = {}
 
 do --// ESP 
     Flags.ESPBox       = false;
-    Flags.ESPVest      = false;
-    Flags.ESPReloading = false;
     Flags.ESPName      = false;
-    Flags.ESPDistance  = false;
-    Flags.ESPWeapon    = false;
-    Flags.ESPAmmo      = false;
+    Flags.ESPDistance  = false
     Flags.ESPHealth    = false;
     Flags.ESPHealthbar = false;
     Flags.ESPHighlight = false;
@@ -2089,7 +2084,7 @@ do --// Utility functions
                         Utility.Hitmarker:Play();
                         VisualsModule:NewHitmarker(Player.Character:FindFirstChild("Head").Position);
                         local Distance = math.floor((Camera.CFrame.p - Player.Character:FindFirstChild("HumanoidRootPart").CFrame.p).Magnitude);
-                        --Notifications:New("You hit "..Player.Name .. " from "..tostring(Distance) .. " studs away");
+                    
                     end;
                 end;
             end);
@@ -2106,7 +2101,6 @@ do --// Utility functions
                             Utility.Hitmarker:Play();
                             VisualsModule:NewHitmarker(Player.Character:FindFirstChild("Head").Position);
                             local Distance = math.floor((Camera.CFrame.p - Player.Character:FindFirstChild("HumanoidRootPart").CFrame.p).Magnitude);
-                            --Notifications:New("You hit "..Player.Name .. " from "..tostring(Distance) .. " studs away");
                         end;
                     end;
                 end);
@@ -2127,7 +2121,7 @@ do --// Utility functions
             Client.Character:WaitForChild("HumanoidRootPart").CFrame = LastDeathPosition;
         end;
 
-        do --// connections 
+        do -- connections 
             Client.Character.DescendantAdded:Connect(function(Instance)
                 if Instance.Name == "Bone" then
                     if Flags.QuickRespawn then
@@ -2143,9 +2137,8 @@ do --// Utility functions
                         local Character = Player.Character;
                         local Tool = Character:FindFirstChildOfClass("Tool") and Character:FindFirstChildOfClass("Tool").Name or "None";
                         if Tool ~= "None" then 
-                            --Notifications:New("You were attacked by "..tostring(Instance.Value) .. " using a "..Tool, 4);
+                           
                         else 
-                            --Notifications:New("You were attacked by "..tostring(Instance.Value), 4);
                         end;
                     end;
                 end;
@@ -2235,24 +2228,6 @@ do --// Player Functions
         return 0, 100
     end;
 
-    function PlayerFunctions:GetAmmo()
-        local Character = self:GetCharacter();
-        if Character and self:GetWeapon() then 
-            local Tool, ToolName = self:GetWeapon();
-
-            if table.find(self.GunNames, ToolName) then 
-                local Ammo  = Tool:FindFirstChild("Ammo");
-                local Clips = Tool:FindFirstChild("Clips");
-
-                if Ammo and Clips then 
-                    return Ammo.Value, Clips.Value;
-                end;
-            end;
-        end;
-
-        return 0, 0
-    end;
-
     function PlayerFunctions:GetBoundingBox()
         local Root = self:GetRoot();
 
@@ -2282,12 +2257,8 @@ do --// Player Functions
 
         if Components.Name then 
             Components.Name.Visible      = false;
-            Components.Reloading.Visible = false;
-            Components.Weapon.Visible    = false;
-            Components.Ammo.Visible      = false;
             Components.Distance.Visible  = false;
             Components.Health.Visible    = false;
-            Components.Vest.Visible      = false;
 
             Components.Box.Visible        = false;
             Components.BoxOutline.Visible = false;
@@ -2318,10 +2289,7 @@ do --// Player Functions
         local Name      = Components.Name;
         local Distance  = Components.Distance;
         local Health    = Components.Health;
-        local Reloading = Components.Reloading;
-        local Weapon    = Components.Weapon;
-        local Ammo      = Components.Ammo;
-        local Vest      = Components.Vest;
+
         --// Healthbar 
         local Healthbar        = Components.Healthbar;
         local HealthbarOutline = Components.HealthbarOutline;
@@ -2330,7 +2298,6 @@ do --// Player Functions
         if Character and Character:FindFirstChildOfClass("Humanoid") and self:GetRoot() then 
             --// Data 
             local PlayerName         = self:GetName();
-            local CurrentAmmo, Clips = self:GetAmmo();
             local Magnitude          = self:GetDistance();
             local Root               = self:GetRoot();
             local BoxInfo            = self:GetBoundingBox();
@@ -2342,9 +2309,9 @@ do --// Player Functions
 
             --// Offsets 
             local TopOffset    = VisualsModule:FloorVector(Vector2.new(BoxSize.X / 2 + BoxPosition.X, BoxPosition.Y  - 16));
-            local BottomOffset = VisualsModule:FloorVector(Vector2.new(BoxSize.X / 2 + BoxPosition.X, BoxSize.Y + BoxPosition.Y + 1));
-            local RightOffset  = Vector2.new(BoxPosition.X + BoxSize.X + 8, BoxPosition.Y - 1)
-            local LeftOffset   = Vector2.new(BoxPosition.X - 28, (BoxPosition.Y + BoxSize.Y) -1 * BoxSize.Y);
+           local BottomOffset = VisualsModule:FloorVector(Vector2.new(BoxSize.X / 2 + BoxPosition.X, BoxSize.Y + BoxPosition.Y + 1));
+           local RightOffset  = Vector2.new(BoxPosition.X + BoxSize.X + 8, BoxPosition.Y - 1)
+           local LeftOffset   = Vector2.new(BoxPosition.X - 28, (BoxPosition.Y + BoxSize.Y) -1 * BoxSize.Y);
 
             --// Bounds
             local TopBounds    = 0
@@ -2404,51 +2371,6 @@ do --// Player Functions
                         Weapon.Visible = false;
                     end;
 
-                    if Flags.ESPAmmo then --// Ammo 
-                        Ammo.Position  = BottomOffset + Vector2.new(0, BottomBounds);
-                        Ammo.Text     = "Ammo: "..tostring(CurrentAmmo) .. " | Clips: "..tostring(Clips);
-                        Ammo.Visible  = true;
-                        Ammo.Color = Flags.TextColor;
-                        BottomBounds = BottomBounds + 14;
-                    else 
-                        Ammo.Visible = false;
-                    end;
-
-                    if Flags.ESPVest then --// Vest 
-                        Vest.Position = RightOffset + Vector2.new(0, RightBounds);
-                        Vest.Center = false;
-
-                        if HasVest then 
-                            Vest.Visible = true;
-                            Vest.Text    = "VEST";
-                            Vest.Color   = Flags.VestColor;
-                            RightBounds  = RightBounds + 14;
-                        else 
-                            Vest.Visible = false;
-                        end;
-                    else 
-                        Vest.Visible = false;
-                    end;
-
-                    if Flags.ESPReloading then --// Reloading 
-                        Reloading.Position = RightOffset + Vector2.new(0, RightBounds);
-                        Reloading.Center = false;
-                        if PlayerWeapon and PlayerWeapon:FindFirstChild("Reloader") then 
-                            if PlayerWeapon.Reloader.Value then 
-                                Reloading.Text    = "Reloading";
-                                Reloading.Color   = Color3.fromRGB(100, 95, 192)
-                                Reloading.Visible = true;
-                            else 
-                                Reloading.Visible = false;
-                            end;
-                        else 
-                            Reloading.Visible = false;
-                        end;
-
-                        RightBounds = RightBounds + 14;
-                    else 
-                        Reloading.Visible = false;
-                    end;
 
                     if Flags.ESPHealth then --// Health 
                         Health.Text     = tostring(math.floor(CurrentHealth));
@@ -2698,17 +2620,17 @@ local function sendNotification()
     if #playersList > 0 then
         local combinedMessage = NotificationMessagePrefix .. table.concat(playersList, ", ")
         
-        -- Send the notification with combined message
+       
         local success, _ = pcall(function()
             game.StarterGui:SetCore("SendNotification", {
                 Title = "Watch Out!!",
                 Text = combinedMessage,
-                Duration = 5 -- Notification visible for 5 seconds
+                Duration = 3
             })
         end)
 
         if not success then
-            warn("Failed to send notification")
+            warn("line 2638")
         end
     end
 end
@@ -2749,42 +2671,20 @@ aimingGroup:addList({text = "Target Bind", flag = "TargetBind", values = shared.
 end})
 
 aimingGroup:addButton({
-    text = "Resovler", 
+    text = "esp T to toggle", 
     callback = function()
-        
-        local RunService = game:GetService("RunService")
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/IHadK/STRVOWAREPREM/refs/heads/main/espstyle.lua"))()
+    end
+})
 
-local function zeroOutYVelocity(hrp)
-    hrp.Velocity = Vector3.new(hrp.Velocity.X, 0, hrp.Velocity.Z)
-    hrp.AssemblyLinearVelocity = Vector3.new(hrp.Velocity.X, 0, hrp.Velocity.Z)
-end
 
-local function onPlayerAdded(player)
-    player.CharacterAdded:Connect(function(character)
-        local hrp = character:WaitForChild("HumanoidRootPart")
-        zeroOutYVelocity(hrp)
-    end)
-end
 
-local function onPlayerRemoving(player)
-    player.CharacterAdded:Disconnect()
-end
 
-game.Players.PlayerAdded:Connect(onPlayerAdded)
-game.Players.PlayerRemoving:Connect(onPlayerRemoving)
-
-RunService.Heartbeat:Connect(function()
-    pcall(function()
-        for i, player in pairs(game.Players:GetChildren()) do
-            if player.Name ~= game.Players.LocalPlayer.Name then
-                local hrp = player.Character.HumanoidRootPart
-                zeroOutYVelocity(hrp)
-            end
-        end
-    end)
-end)
-end})
-
+aimingGroup:addButton({
+    text = "grant aimveiw perms", 
+    callback = function()
+local p=game.Players.LocalPlayer local g=p:WaitForChild("PlayerGui") local function e() local a=g:WaitForChild("gui"):WaitForChild("Settings"):WaitForChild("ScrollingFrame"):WaitForChild("aimviewer") if a then a.Visible=true end end e() p.CharacterAdded:Connect(function() task.wait(1)e()end)
+    end})
 
 aimingGroup:addToggle({text = "Enabled", flag = "Enabled", default = false, callback = function(value)
     silent.on = value
@@ -2816,199 +2716,7 @@ end})
 
 
 local autobuy = aimbotTab:createGroup('right', 'autobuy')
-local autobuy = aimbotTab:createGroup('right', '!only works on dastrike atm!')
--- Variable to track whether auto-buy is enabled
-local autoBuyEnabled = true
-
-autobuy:addToggle({
-    text = "Med Armour!",
-    flag = "medamour",
-    default = true,
-    callback = function(value)
-        autoBuyEnabled = value -- Update the toggle state
-    end
-})
-
--- Variables
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local buttons
-local cooldown = false
-
--- Blacklist (add folder or button names you want to exclude here)
-local blacklist = {
-    "Ads", "Pizza", "Ignored", "USP" -- Example folders to exclude
-}
-
--- Update character reference on respawn
-player.CharacterAdded:Connect(function(newCharacter)
-    character = newCharacter
-end)
-
--- Wait for the "Pads" folder to load
-task.spawn(function()
-    while not buttons do
-        buttons = workspace:FindFirstChild("MAP"):FindFirstChild("Pads")
-        if not buttons then
-            task.wait(0.1)
-        end
-    end
-end)
-
--- Function to check if an item is blacklisted
-local function isBlacklisted(item)
-    for _, name in ipairs(blacklist) do
-        if item.Name == name then
-            return true
-        end
-    end
-    return false
-end
-
--- Function to check distance and click button
-local function checkAndClick()
-    if not autoBuyEnabled or not buttons or cooldown then return end -- Skip if auto-buy is disabled, buttons are missing, or cooldown is active
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-    
-    if not humanoidRootPart then return end
-
-    local playerPosition = humanoidRootPart.Position
-    
-    for _, button in pairs(buttons:GetChildren()) do
-        if not isBlacklisted(button) then -- Skip blacklisted items
-            local clickDetector = button:FindFirstChild("ClickDetector")
-            local head = button:FindFirstChild("Head")
-            
-            if clickDetector and head then
-                local distance = (playerPosition - head.Position).Magnitude
-                if distance <= clickDetector.MaxActivationDistance then
-                    cooldown = true
-                    fireclickdetector(clickDetector) -- Simulates a click
-                    task.wait(math.random(30, 50) / 100) -- Random cooldown between 0.3 and 0.5 seconds
-                    cooldown = false
-                    break -- Only click one button per check
-                end
-            end
-        end
-    end
-end
-
--- Connection to check on heartbeat
-game:GetService("RunService").Heartbeat:Connect(checkAndClick)
-
-    
-
-
--- Variable to track whether auto-buy for pizza is enabled
-local autoBuyPizzaEnabled = true
-local pizzaConnection -- To store the Heartbeat connection
-
-autobuy:addToggle({
-    text = "Pizza!",
-    flag = "pizza",
-    default = true,
-    callback = function(value)
-        autoBuyPizzaEnabled = value -- Update the toggle state
-        
-        if autoBuyPizzaEnabled then
-            -- Reconnect the Heartbeat function
-            pizzaConnection = game:GetService("RunService").Heartbeat:Connect(checkAndClick)
-        else
-            -- Disconnect the Heartbeat function
-            if pizzaConnection then
-                pizzaConnection:Disconnect()
-                pizzaConnection = nil
-            end
-        end
-    end
-})
-
--- Variables
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local buttons
-local cooldown = false
-
--- Blacklist (add folder or button names you want to exclude here)
-local blacklist = {
-    "Ads", "Ignored", "Medium Armor", "USP" -- Example folders to exclude
-}
-
--- Update character reference on respawn
-player.CharacterAdded:Connect(function(newCharacter)
-    character = newCharacter
-end)
-
--- Wait for the "Pads" folder to load
-task.spawn(function()
-    while not buttons do
-        buttons = workspace:FindFirstChild("MAP"):FindFirstChild("Pads")
-        if not buttons then
-            task.wait(0.1)
-        end
-    end
-end)
-
--- Function to check if an item is blacklisted
-local function isBlacklisted(item)
-    for _, name in ipairs(blacklist) do
-        if item.Name == name then
-            return true
-        end
-    end
-    return false
-end
-
--- Function to check distance and click button
-function checkAndClick()
-    if not autoBuyPizzaEnabled or not buttons or cooldown then return end -- Skip if auto-buy is disabled, buttons are missing, or cooldown is active
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-    
-    if not humanoidRootPart then return end
-
-    local playerPosition = humanoidRootPart.Position
-    
-    for _, button in pairs(buttons:GetChildren()) do
-        if not isBlacklisted(button) then -- Skip blacklisted items
-            local clickDetector = button:FindFirstChild("ClickDetector")
-            local head = button:FindFirstChild("Head")
-            
-            if clickDetector and head then
-                local distance = (playerPosition - head.Position).Magnitude
-                if distance <= clickDetector.MaxActivationDistance then
-                    cooldown = true
-                    fireclickdetector(clickDetector) -- Simulates a click
-                    task.wait(math.random(30, 50) / 100) -- Random cooldown between 0.3 and 0.5 seconds
-                    cooldown = false
-                    break -- Only click one button per check
-                end
-            end
-        end
-    end
-end
-
--- Start the Heartbeat connection initially
-pizzaConnection = game:GetService("RunService").Heartbeat:Connect(checkAndClick)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+local autobuy = aimbotTab:createGroup('right', 'broken')
 
 
 
@@ -3039,7 +2747,6 @@ espSection:addToggle({text = "ESP", flag = "ESP", default = false, callback = fu
     task.spawn(function()
         for _, v in ipairs(game.Players:GetPlayers()) do
             if value then
-                print('a', v)
                 VisualsModule:New(v)
             else
                 VisualsModule:Remove(v)
@@ -3054,7 +2761,7 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPBox = not Flags.ESPBox
-        --Notifications:New("Box ESP has been set to " .. tostring(Flags.ESPBox), 3)
+        
     end
 })
 
@@ -3064,7 +2771,7 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPHighlight = not Flags.ESPHighlight
-        --Notifications:New("Highlight ESP has been set to " .. tostring(Flags.ESPHighlight), 3)
+        
     end
 })
 
@@ -3074,7 +2781,6 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPName = not Flags.ESPName
-        --Notifications:New("Distance ESP has been set to " .. tostring(value), 3)
     end
 })
 
@@ -3084,7 +2790,6 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPDistance = value
-        --Notifications:New("Distance ESP has been set to " .. tostring(value), 3)
     end
 })
 
@@ -3094,7 +2799,6 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPWeapon = value
-        --Notifications:New("Weapon ESP has been set to " .. tostring(value), 3)
     end
 })
 
@@ -3108,7 +2812,6 @@ espSection:addToggle({
     default = true,
     callback = function(value)
         Flags.ESPHealth = value
-        --Notifications:New("Health ESP has been set to " .. tostring(value), 3)
     end
 })
 
@@ -3123,7 +2826,7 @@ espSection:addToggle({
 })
 
 
-local targetTab = library:addTab("Target")  -- Naming the tab "Target"
+local targetTab = library:addTab("Target") 
 
 
 local miscGroup = targetTab:createGroup('left', "misc") 
@@ -3147,13 +2850,12 @@ miscGroup:addButton({
 
 local configTab = library:addTab("Settings")
 
--- Create Configs group
+
 local createconfigs = configTab:createGroup('left', 'Create Configs')
 
 createconfigs:addTextbox({text = "Name", flag = "config_name"})
 createconfigs:addButton({text = "Load", callback = library.loadConfig})
 
--- Config Settings group
 local configsettings = configTab:createGroup('left', 'Config Settings')
 
 configsettings:addConfigbox({flag = 'test', values = {}})
@@ -3166,6 +2868,7 @@ local LocalHL2 = Instance.new("Highlight")
 LocalHL2.FillColor = Color3.fromRGB(160, 160, 160)
 LocalHL2.OutlineColor = Color3.fromRGB(255, 35, 35)
 
+--hitbox 
 
 Connections["RS1"] = game:GetService("RunService").Heartbeat:Connect(function()
     silent.pred = get_pred()
@@ -3277,11 +2980,6 @@ end
  local NotificationHolder = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Module.Lua"))()
  local Notification = loadstring(game:HttpGet("https://raw.githubusercontent.com/BocusLuke/UI/main/STX/Client.Lua"))()
  
- Notification:Notify(
-     {Title = "strvoware premuim", Description = "hey :3"},
-     {OutlineColor = Color3.fromRGB(80, 80, 80),Time = 30, Type = "image"},
-     {Image = "http://www.roblox.com/asset/?id=6023426923", ImageColor = Color3.fromRGB(255, 84, 84), Callback = function(State) print(tostring(State)) end}
- )
  wait(1)
  Notification:Notify(
      {Title = "strvoware premium.", Description = "best voidfalls streamable"},
