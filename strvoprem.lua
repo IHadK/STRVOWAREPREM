@@ -1,4 +1,4 @@
-
+--xeno vers v2.6 added ko check
 local inputService   = game:GetService("UserInputService")
 local runService     = game:GetService("RunService")
 local tweenService   = game:GetService("TweenService")
@@ -9,7 +9,7 @@ local mouse          = localPlayer:GetMouse()
 local strvo           = game:GetObjects("rbxassetid://12705540680")[1]
 strvo.bg.Position     = UDim2.new(0.5,-strvo.bg.Size.X.Offset/2,0.5,-strvo.bg.Size.Y.Offset/2)
 strvo.Parent          = game:GetService("CoreGui")
-strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">hotfix for xeno</font>'
+strvo.bg.pre.Text = '<font color="#FFFFF2">strvoware</font> - <font color="#FF0000">V2.6</font>'
 
 local library = {cheatname = "strvoware";ext = "";gamename = "";colorpicking = false;tabbuttons = {};tabs = {};options = {};flags = {};scrolling = false;notifyText = Drawing.new("Text");playing = false;multiZindex = 200;toInvis = {};libColor = Color3.fromRGB(69, 23, 255);disabledcolor = Color3.fromRGB(233, 0, 0);blacklisted = {Enum.KeyCode.W,Enum.KeyCode.A,Enum.KeyCode.S,Enum.KeyCode.D,Enum.UserInputType.MouseMovement}}
 
@@ -1903,12 +1903,18 @@ GetMagnitudeFromMouse = function(Part)
     end
     return math.huge
 end
-
+--checks 
 GetClosestPlayer = function()
     local Target = nil
     local Closest = math.huge
     for _, v in pairs(Players:GetPlayers()) do
         if v.Character and v ~= LocalPlayer and v.Character:FindFirstChild("HumanoidRootPart") then
+            local humanoid = v.Character:FindFirstChild("Humanoid")
+            
+            if silent.alive and (not humanoid or humanoid.Health <= 15) then
+                continue
+            end
+            
             if not OnScreen(v.Character.HumanoidRootPart) then 
                 continue 
             end
@@ -2723,6 +2729,10 @@ local autobuy = aimbotTab:createGroup('right', 'broken')
 -- Checks section
 local checksSection = aimbotTab:createGroup('left', 'Checks')
 
+checksSection:addToggle({text = "KO", flag = "AliveCheck", default = true, callback = function(value)
+    silent.alive = value
+end})
+
 checksSection:addToggle({text = "Visible", flag = "VisibleCheck", default = true, callback = function(value)
     silent.visible = value
 end})
@@ -2735,7 +2745,7 @@ checksSection:addToggle({text = "Distance", flag = "DistanceCheck", default = tr
     silent.distance = value
 end})
 
-checksSection:addSlider({text = "Max Distance", flag = "MaxDistance", min = 1, max = 1000, default = 150, callback = function(value)
+checksSection:addSlider({text = "Distance", flag = "MaxDistance", min = 1, max = 1000, default = 150, callback = function(value)
     silent.dist = value
 end})
 
@@ -2868,7 +2878,7 @@ local LocalHL2 = Instance.new("Highlight")
 LocalHL2.FillColor = Color3.fromRGB(160, 160, 160)
 LocalHL2.OutlineColor = Color3.fromRGB(255, 35, 35)
 
---hitbox 
+-- //functions
 
 Connections["RS1"] = game:GetService("RunService").Heartbeat:Connect(function()
     silent.pred = get_pred()
